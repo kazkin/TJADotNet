@@ -306,10 +306,13 @@ namespace TJADotNet
                         if (int.TryParse(item.Value, out var result))
                         {
                             course.Info.Course = CourseConverter.GetCoursesFromNumber(result);
+                           Chart.Info.CourseList.Add(course.Info.Course);
                         }
                         else
                         {
                             course.Info.Course = CourseConverter.GetCoursesFromString(item.Value);
+                            Chart.Info.CourseList.Add(course.Info.Course);
+                          // Console.WriteLine(course.Info.Course);
                         }
                     }
                     else if (header("LEVEL"))
@@ -317,6 +320,8 @@ namespace TJADotNet
                         if (int.TryParse(item.Value, out var result))
                         {
                             course.Info.Level = result;
+                            Chart.Info.DifficultyList.Add(result);
+                           // Console.WriteLine(course.Info.Level);
                         }
                     }
                     else if (header("BALLOON"))
@@ -634,7 +639,22 @@ namespace TJADotNet
                                     if (chip.NoteType == Notes.Balloon)
                                     {
                                         // ふうせん連打のノルマ
-                                        chip.RollCount = course.Info.Balloon[balloonIndex];
+                                        try
+                                        {
+                                            chip.RollCount = course.Info.Balloon[balloonIndex];
+                                            
+                                        }
+                                        catch (System.ArgumentOutOfRangeException e)
+                                        {
+                                            chip.RollCount = 5;
+                                            
+                                        }
+                                            
+                                        
+                                        
+                                           
+                                        
+                                        
                                         balloonIndex++;
                                     }
 
@@ -918,7 +938,7 @@ namespace TJADotNet
         /// <summary>
         /// 改行。Unix環境でも常にCRLFとして扱う。
         /// </summary>
-        private const string NewLine = "\r\n";
+        private const string NewLine = "\n";
 
         /// <summary>
         /// チップリストからインデックスの前にある小節を返します。
@@ -930,10 +950,18 @@ namespace TJADotNet
         {
             for (var i = index; i > 0; i--)
             {
-                if (list[i].ChipType == Chips.Measure)
+                try
+                {
+                    if (list[i].ChipType == Chips.Measure)
                 {
                     return i;
                 }
+                }
+                catch (System.ArgumentOutOfRangeException)
+                {
+                    return 0;
+                }
+                
             }
             return 0;
         }

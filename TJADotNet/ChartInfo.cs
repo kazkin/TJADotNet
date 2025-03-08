@@ -12,6 +12,14 @@ namespace TJADotNet
     public class ChartInfo
     {
         /// <summary>
+        /// コースリスト。
+        /// </summary>
+        public List<Courses> CourseList { get; set; } = new List<Courses>();
+        /// <summary>
+        /// コースリスト。
+        /// </summary>
+        public List<int> DifficultyList { get; set; } = new List<int>();
+        /// <summary>
         /// 譜面のタイトル。
         /// </summary>
         public string Title { get; set; }

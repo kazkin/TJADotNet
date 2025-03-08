@@ -11,6 +11,7 @@ namespace TJADotNet
     /// </summary>
     public class CourseInfo
     {
+       
         /// <summary>
         /// コース名。
         /// </summary>
