@@ -6,8 +6,17 @@ using System.Threading.Tasks;
 
 namespace TJADotNet
 {
-    public class Chart
+    public class Chart : ICloneable
     {
+        public object Clone()
+        {
+            return new Chart
+            {
+               CommonHeader = this.CommonHeader,
+               Courses = this.Courses,
+               Info = this.Info
+            };
+        }
         public List<Header> CommonHeader { get; set; } = new List<Header>();
         public List<Course> Courses { get; set; } = new List<Course>();
         public ChartInfo Info { get; set; } = new ChartInfo();
